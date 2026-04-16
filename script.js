@@ -76,7 +76,7 @@ carro.add(criarRodas(-x,-x,a,3,cor2));
 //
 const ground = new THREE.Mesh(
   new THREE.PlaneGeometry(100, 100),
-  new THREE.MeshBasicMaterial({ color: 0x228B22 })
+  new THREE.MeshBasicMaterial({ color: 0xd3d3d3 })
 );
 ground.rotation.x = -Math.PI / 2;
 scene.add(ground);
@@ -95,9 +95,9 @@ window.addEventListener('keyup', (e) => {
 
 //animação do carro se movendo com as teclas:
 function updateCamera() {
-  //camera.position.x = carro.position.x;
-  //camera.position.z = carro.position.z + 7;
-  //camera.position.y = carro.position.y + 5;
+  camera.position.x = carro.position.x;
+  camera.position.z = carro.position.z + 7;
+  camera.position.y = carro.position.y + 5;
   camera.lookAt(carro.position);
 }
 
