@@ -81,7 +81,7 @@ const ground = new THREE.Mesh(
 ground.rotation.x = -Math.PI / 2;
 scene.add(ground);
 //
-
+carro.position.y = 1;
 scene.add(carro);//adiciona carro a cena
 
 //reconhece o teclado:
