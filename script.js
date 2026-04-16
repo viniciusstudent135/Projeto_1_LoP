@@ -73,8 +73,14 @@ carro.add(criarRodas(-x,x,a,3,cor2));
 carro.add(criarRodas(x,-x,a,3,cor2));
 carro.add(criarRodas(-x,-x,a,3,cor2));
 //---------------------|carro pronto|-----------------------\\
-
-
+//
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(100, 100),
+  new THREE.MeshBasicMaterial({ color: 0x228B22 })
+);
+ground.rotation.x = -Math.PI / 2;
+scene.add(ground);
+//
 
 scene.add(carro);//adiciona carro a cena
 
