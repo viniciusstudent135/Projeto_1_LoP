@@ -76,7 +76,7 @@ carro.add(criarRodas(-x,-x,a,3,cor2));
 //
 const ground = new THREE.Mesh(
   new THREE.PlaneGeometry(100, 100),
-  new THREE.MeshBasicMaterial({ color: 0x808080 }) //
+  new THREE.MeshBasicMaterial({ color: 0x035e01 }) //
 );
 ground.rotation.x = -Math.PI / 2;
 scene.add(ground);
