@@ -13,7 +13,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 //configurar a profundidade da camera:
-camera.position.z = 100;
+camera.position.z = 10;
 
 
 
