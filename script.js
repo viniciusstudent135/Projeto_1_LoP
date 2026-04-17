@@ -95,9 +95,9 @@ window.addEventListener('keyup', (e) => {
 
 //animação do carro se movendo com as teclas:
 function updateCamera() {
-  camera.position.x = carro.position.x;
-  camera.position.z = carro.position.z + 7;
-  camera.position.y = carro.position.y + 5;
+  //camera.position.x = carro.position.x;
+  //camera.position.z = carro.position.z + 7;
+  //camera.position.y = carro.position.y + 5;
   camera.lookAt(carro.position);
 }
 
