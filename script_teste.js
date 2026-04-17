@@ -75,31 +75,11 @@ carro.add(criarRodas(-x,-x,a,b2,cor2));
 
 scene.add(carro);//adiciona carro a cena
 
-//reconhece o teclado:
-const keys = {};
-window.addEventListener('keydown', (e) => {
-  keys[e.key] = true;
-});
-window.addEventListener('keyup', (e) => {
-  keys[e.key] = false;
-});
-
-//carro se movendo ao apertar as teclas:
-function updateCamera() {
-  camera.position.x = carro.position.x;
-  camera.position.z = carro.position.z + 7;
-  camera.position.y = carro.position.y + 5;
-  camera.lookAt(carro.position); //camera acompanha o carro
-}
-const velocidade = 3;
 function animacao(){
   requestAnimationFrame(animacao);
-  if (keys['w']) carro.position.z -= velocidade;
-  if (keys['s']) carro.position.z += velocidade;
-  if (keys['a']) carro.position.x -= velocidade;
-  if (keys['d']) carro.position.x += velocidade;
+  carro.rotation.y += 0.01; //rotação do carro
+  carro.rotation.x += 0.005; //rotação do carro
   renderer.render(scene, camera);
   updateCamera();
 }
-
 animacao();
