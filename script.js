@@ -96,10 +96,10 @@ function updateCamera() {
 
 function animacao(){
   requestAnimationFrame(animacao);
-  if (keys['w']) carro.position.z -= 2;
-  if (keys['s']) carro.position.z += 2;
-  if (keys['a']) carro.position.x -= 2;
-  if (keys['d']) carro.position.x += 2;
+  if (keys['w']) carro.position.z -= 4;
+  if (keys['s']) carro.position.z += 4;
+  if (keys['a']) carro.position.x -= 4;
+  if (keys['d']) carro.position.x += 4;
   renderer.render(scene, camera);
   updateCamera();
 }
