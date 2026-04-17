@@ -73,15 +73,9 @@ carro.add(criarRodas(-x,x,a,3,cor2));
 carro.add(criarRodas(x,-x,a,3,cor2));
 carro.add(criarRodas(-x,-x,a,3,cor2));
 //---------------------|carro pronto|-----------------------\\
-//chão:
-const ground = new THREE.Mesh(
-  new THREE.PlaneGeometry(100, 100),
-  new THREE.MeshBasicMaterial({ color: 0x035e01 }) //
-);
-ground.rotation.x = -Math.PI / 2;
-scene.add(ground);
-//---
-//carro.position.y = 1;
+
+
+
 scene.add(carro);//adiciona carro a cena
 
 //reconhece o teclado:
@@ -95,9 +89,9 @@ window.addEventListener('keyup', (e) => {
 
 //animação do carro se movendo com as teclas:
 function updateCamera() {
-  camera.position.x = carro.position.x;
-  camera.position.z = carro.position.z + 7;
-  camera.position.y = carro.position.y + 5;
+  //camera.position.x = carro.position.x;
+  //camera.position.z = carro.position.z + 7;
+  //camera.position.y = carro.position.y + 5;
   camera.lookAt(carro.position);
 }
 
@@ -107,10 +101,8 @@ function animacao(){
   if (keys['s']) carro.position.z += 0.4;
   if (keys['a']) carro.position.x -= 0.4;
   if (keys['d']) carro.position.x += 0.4;
-  if (keys['Space']) carro.position.y += 0.4;
-  updateCamera();
   renderer.render(scene, camera);
+  updateCamera();
 }
-
 
 animacao();
