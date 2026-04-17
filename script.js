@@ -107,6 +107,7 @@ function animacao(){
   if (keys['s']) carro.position.z += 0.4;
   if (keys['a']) carro.position.x -= 0.4;
   if (keys['d']) carro.position.x += 0.4;
+  if (keys['space']) carro.position.y += 0.4;
   updateCamera();
   renderer.render(scene, camera);
 }
