@@ -1,5 +1,5 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';//ainda não utilizei
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 //testar no github page
 //configurando cena
 const scene = new THREE.Scene();
@@ -73,15 +73,15 @@ carro.add(criarRodas(-x,x,a,3,cor2));
 carro.add(criarRodas(x,-x,a,3,cor2));
 carro.add(criarRodas(-x,-x,a,3,cor2));
 //---------------------|carro pronto|-----------------------\\
-//
+//chão:
 const ground = new THREE.Mesh(
   new THREE.PlaneGeometry(100, 100),
   new THREE.MeshBasicMaterial({ color: 0x035e01 }) //
 );
 ground.rotation.x = -Math.PI / 2;
 scene.add(ground);
-//
-carro.position.y = 1;
+//---
+//carro.position.y = 1;
 scene.add(carro);//adiciona carro a cena
 
 //reconhece o teclado:
@@ -107,8 +107,8 @@ function animacao(){
   if (keys['s']) carro.position.z += 0.4;
   if (keys['a']) carro.position.x -= 0.4;
   if (keys['d']) carro.position.x += 0.4;
-  renderer.render(scene, camera);
   updateCamera();
+  renderer.render(scene, camera);
 }
 
 
