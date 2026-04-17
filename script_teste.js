@@ -78,7 +78,6 @@ scene.add(carro);//adiciona carro a cena
 function animacao(){
   requestAnimationFrame(animacao);
   carro.rotation.y += 0.01; //rotação do carro
-  carro.rotation.x += 0.005; //rotação do carro
   renderer.render(scene, camera);
   updateCamera();
 }
