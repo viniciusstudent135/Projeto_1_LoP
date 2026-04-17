@@ -18,12 +18,12 @@ camera.position.z = 10;
 
 ////---------------------|criação do carro|-----------------------\\
 const carro = new THREE.Group();
-const corCarro = 0xd3d3d3; //0x030bfc, 0xD3D3D3
+const corCarro = 0xd3d3d3; // cinza quase branco
 //corpo do carro
 function CriarCorpo(){
   const body = new THREE.Mesh(
-    new THREE.BoxGeometry(2, 0.85, 3),
-    new THREE.MeshBasicMaterial({color: corCarro})
+    new THREE.BoxGeometry(2, 0.85, 3),//largura,altura,comprimento
+    new THREE.MeshBasicMaterial({color: corCarro}) //cor e textura do material (material escolhido = básico, cor sólida)
   );
   return body;
 }
@@ -37,9 +37,9 @@ function CriaParabrisa(base, altura,x,y,z){
   parabrisa.position.set(x,y,z);
   return parabrisa;
 }
-const x1=0,y1=0.42,z1=0.69;
+const x1=0, y1=0.42,z1=0.69, y2=0.003,z2=1.5; //posições dos parabrisa
 carro.add(CriaParabrisa(2,1, x1,y1,z1));
-carro.add(CriaParabrisa(2,0.8, x1,0.003,1.5));
+carro.add(CriaParabrisa(2,0.8, x1,y2,z2));
 //relevo do carro
 function criarRelevo(){
   const relevo = new THREE.Mesh(
@@ -61,19 +61,17 @@ function criarRodas(x,z, a,b,cor){
   roda.position.set(x, -0.6,z); 
   return roda;
 }
-const x = 0.9, a=0.4, b=6, cor = 0x363636, cor2= 0x808080;
+const x = 0.9, a=0.4, b=6, b2=3, cor = 0x363636, cor2= 0x808080;
 carro.add(criarRodas(x,x,a,b,cor));
 carro.add(criarRodas(-x,x,a,b,cor));
 carro.add(criarRodas(x,-x,a,b,cor));
 carro.add(criarRodas(-x,-x,a,b,cor));
 //efeito do aro da roda
-carro.add(criarRodas(x,x,a,3,cor2));
-carro.add(criarRodas(-x,x,a,3,cor2));
-carro.add(criarRodas(x,-x,a,3,cor2));
-carro.add(criarRodas(-x,-x,a,3,cor2));
+carro.add(criarRodas(x,x,a,b2,cor2));
+carro.add(criarRodas(-x,x,a,b2,cor2));
+carro.add(criarRodas(x,-x,a,b2,cor2));
+carro.add(criarRodas(-x,-x,a,b2,cor2));
 //---------------------|carro pronto|-----------------------\\
-
-
 
 scene.add(carro);//adiciona carro a cena
 
@@ -86,20 +84,20 @@ window.addEventListener('keyup', (e) => {
   keys[e.key] = false;
 });
 
-//animação do carro se movendo com as teclas:
+//carro se movendo ao apertar as teclas:
 function updateCamera() {
   camera.position.x = carro.position.x;
   camera.position.z = carro.position.z + 7;
   camera.position.y = carro.position.y + 5;
-  camera.lookAt(carro.position);
+  camera.lookAt(carro.position); //camera acompanha o carro
 }
-
+const velocidade = 3;
 function animacao(){
   requestAnimationFrame(animacao);
-  if (keys['w']) carro.position.z -= 4;
-  if (keys['s']) carro.position.z += 4;
-  if (keys['a']) carro.position.x -= 4;
-  if (keys['d']) carro.position.x += 4;
+  if (keys['w']) carro.position.z -= velocidade;
+  if (keys['s']) carro.position.z += velocidade;
+  if (keys['a']) carro.position.x -= velocidade;
+  if (keys['d']) carro.position.x += velocidade;
   renderer.render(scene, camera);
   updateCamera();
 }
