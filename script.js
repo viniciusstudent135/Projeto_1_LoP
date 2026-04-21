@@ -14,7 +14,7 @@ document.body.appendChild(renderer.domElement);
 camera.position.z = 10;
 
 
-////---------------------|criação do carro|-----------------------\\
+//---------------------|criação do carro|-----------------------\\
 const carro = new THREE.Group();
 const corCarro = 0xe30f00; // cinza quase brancod3d3d3
 //corpo do carro
