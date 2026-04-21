@@ -1,5 +1,4 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-//testar no github page
 //configurando cena
 const scene = new THREE.Scene();
 //camera
@@ -17,7 +16,7 @@ camera.position.z = 10;
 
 ////---------------------|criação do carro|-----------------------\\
 const carro = new THREE.Group();
-const corCarro = 0xd3d3d3; // cinza quase branco
+const corCarro = 0xe30f00; // cinza quase brancod3d3d3
 //corpo do carro
 function CriarCorpo(){
   const body = new THREE.Mesh(
@@ -28,17 +27,17 @@ function CriarCorpo(){
 }
 carro.add(CriarCorpo());
 
-function CriaParabrisa(base, altura,x,y,z){
-  const parabrisa = new THREE.Mesh(
+function CriaSombra(base, altura,x,y,z){
+  const sombra = new THREE.Mesh(
     new THREE.PlaneGeometry(base,altura),
-    new THREE.MeshBasicMaterial({color: 0x808080})
+    new THREE.MeshBasicMaterial({color: 0x4f221f})//antes 808080
   );
-  parabrisa.position.set(x,y,z);
-  return parabrisa;
+  sombra.position.set(x,y,z);
+  return sombra;
 }
-const x1=0, y1=0.42,z1=0.69, y2=0.003,z2=1.5; //posições dos parabrisa
-carro.add(CriaParabrisa(2,1, x1,y1,z1));
-carro.add(CriaParabrisa(2,0.8, x1,y2,z2));
+const x1=0, y1=0.42,z1=0.69, y2=0.003,z2=1.55; //posições das sombras
+carro.add(CriaSombra(2,1, x1,y1,z1));
+carro.add(CriaSombra(2,0.82, x1,y2,z2));
 
 //relevo do carro
 function criarRelevo(){
@@ -61,23 +60,30 @@ function criarRodas(x,z, a,b,cor){
   roda.position.set(x, -0.6,z); 
   return roda;
 }
-const x = 0.9, a=0.4, b=6, b2=3, cor = 0x363636, cor2= 0x808080;
-carro.add(criarRodas(x,x,a,b,cor));
-carro.add(criarRodas(-x,x,a,b,cor));
-carro.add(criarRodas(x,-x,a,b,cor));
-carro.add(criarRodas(-x,-x,a,b,cor));
+const x = 0.9, xAro = 0.97, a=0.4, aAro= 0.3, b=8, b2=6, corRoda = 0x000000, corAro= 0x808080;
+carro.add(criarRodas(x,x,a,b,corRoda));
+carro.add(criarRodas(-x,x,a,b,corRoda));
+carro.add(criarRodas(x,-x,a,b,corRoda));
+carro.add(criarRodas(-x,-x,a,b,corRoda));
 //efeito do aro da roda
-carro.add(criarRodas(x,x,a,b2,cor2));
-carro.add(criarRodas(-x,x,a,b2,cor2));
-carro.add(criarRodas(x,-x,a,b2,cor2));
-carro.add(criarRodas(-x,-x,a,b2,cor2));
+carro.add(criarRodas(xAro,x,aAro,b2,corAro));
+carro.add(criarRodas(-xAro,x,aAro,b2,corAro));
+carro.add(criarRodas(xAro,-x,aAro,b2,corAro));
+carro.add(criarRodas(-xAro,-x,aAro,b2,corAro));
 //---------------------|carro pronto|-----------------------\\
 
 scene.add(carro);//adiciona carro a cena
 
+const fundo = new THREE.Mesh(
+  new THREE.PlaneGeometry(1000, 1000),//largura,altura
+  new THREE.MeshBasicMaterial({color: 0xcfcec2}) //cor e textura do material (material escolhido = básico, cor sólida)
+);
+fundo.position.z = -10;//move o objeto na cena em 3d
+scene.add(fundo);
+
 function animacao(){
   requestAnimationFrame(animacao);
-  carro.rotation.y += 0.01; //rotação do carro
+  carro.rotation.y += 0.02; //rotação do carro
   renderer.render(scene, camera);
   updateCamera();
 }

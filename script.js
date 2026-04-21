@@ -16,7 +16,7 @@ camera.position.z = 10;
 
 ////---------------------|criação do carro|-----------------------\\
 const carro = new THREE.Group();
-const corCarro = 0xd3d3d3; // cinza quase branco
+const corCarro = 0xe30f00; // cinza quase brancod3d3d3
 //corpo do carro
 function CriarCorpo(){
   const body = new THREE.Mesh(
@@ -30,14 +30,14 @@ carro.add(CriarCorpo());
 function CriaSombra(base, altura,x,y,z){
   const sombra = new THREE.Mesh(
     new THREE.PlaneGeometry(base,altura),
-    new THREE.MeshBasicMaterial({color: 0x808080})
+    new THREE.MeshBasicMaterial({color: 0x4f221f})//antes 808080
   );
   sombra.position.set(x,y,z);
   return sombra;
 }
-const x1=0, y1=0.42,z1=0.69, y2=0.003,z2=1.5; //posições das sombras
+const x1=0, y1=0.42,z1=0.69, y2=0.003,z2=1.55; //posições das sombras
 carro.add(CriaSombra(2,1, x1,y1,z1));
-carro.add(CriaSombra(2,0.8, x1,y2,z2));
+carro.add(CriaSombra(2,0.82, x1,y2,z2));
 
 //relevo do carro
 function criarRelevo(){
@@ -60,18 +60,60 @@ function criarRodas(x,z, a,b,cor){
   roda.position.set(x, -0.6,z); 
   return roda;
 }
-const x = 0.9, a=0.4, b=6, b2=3, cor = 0x363636, cor2= 0x808080;
-carro.add(criarRodas(x,x,a,b,cor));
-carro.add(criarRodas(-x,x,a,b,cor));
-carro.add(criarRodas(x,-x,a,b,cor));
-carro.add(criarRodas(-x,-x,a,b,cor));
+const x = 0.9, xAro = 0.97, a=0.4, aAro= 0.3, b=8, b2=6, corRoda = 0x000000, corAro= 0x808080;
+carro.add(criarRodas(x,x,a,b,corRoda));
+carro.add(criarRodas(-x,x,a,b,corRoda));
+carro.add(criarRodas(x,-x,a,b,corRoda));
+carro.add(criarRodas(-x,-x,a,b,corRoda));
 //efeito do aro da roda
-carro.add(criarRodas(x,x,a,b2,cor2));
-carro.add(criarRodas(-x,x,a,b2,cor2));
-carro.add(criarRodas(x,-x,a,b2,cor2));
-carro.add(criarRodas(-x,-x,a,b2,cor2));
+carro.add(criarRodas(xAro,x,aAro,b2,corAro));
+carro.add(criarRodas(-xAro,x,aAro,b2,corAro));
+carro.add(criarRodas(xAro,-x,aAro,b2,corAro));
+carro.add(criarRodas(-xAro,-x,aAro,b2,corAro));
+
+carro.position.z = 80;//ajusta posição inicial do carro
 //---------------------|carro pronto|-----------------------\\
 
+//---------------------|criação da pista|-----------------------\\
+const corPista = 0x394039;//cor da pista
+const corChao = 0x1a6b15;//cor do chão: verde escuro:
+const Pista = new THREE.Group();
+const Chao = new THREE.Group();
+
+function CriarGround(b,h,cor){
+  const chao = new THREE.Mesh(
+    new THREE.PlaneGeometry(b, h),//largura,altura,comprimento
+    new THREE.MeshBasicMaterial({color: cor}) //cor e textura do material (material escolhido = básico, cor sólida)
+  );
+  chao.rotation.x = -Math.PI/2;// rotaciona o objeto
+  chao.position.y = -0.8;//move o objeto na cena em 3d
+  return chao;
+}
+
+Chao.add(CriarGround(700,700,corChao));
+Chao.position.y = -0.81;
+Pista.add(CriarGround(20,190,corPista));
+ 
+function CriarListra(z){
+  const listra = new THREE.Mesh(
+    new THREE.PlaneGeometry(2, 15),//largura,altura
+    new THREE.MeshBasicMaterial({color: 0xd1c411}) //cor e textura do material (material escolhido = básico, cor sólida)
+  );
+  listra.rotation.x = -Math.PI/2;// rotaciona o objeto
+  listra.position.y = -0.79;//move o objeto na cena em 3d
+  listra.position.z = z;//move o objeto na cena em 3d
+  return listra;
+}
+Pista.add(CriarListra(-70));
+Pista.add(CriarListra(-40));
+Pista.add(CriarListra(-10));
+Pista.add(CriarListra(20));
+Pista.add(CriarListra(50));
+Pista.add(CriarListra(80));
+//---------------------|pista pronta|-----------------------\\
+
+scene.add(Chao);
+scene.add(Pista);
 scene.add(carro);//adiciona carro a cena
 
 //reconhece o teclado:
@@ -85,12 +127,12 @@ window.addEventListener('keyup', (e) => {
 
 //carro se movendo ao apertar as teclas:
 function updateCamera() {
-  camera.position.x = carro.position.x;
+  camera.position.x = carro.position.x + 2;
   camera.position.z = carro.position.z + 7;
   camera.position.y = carro.position.y + 5;
   camera.lookAt(carro.position); //camera acompanha o carro
 }
-const velocidade = 3;
+const velocidade = 0.5;
 function animacao(){
   requestAnimationFrame(animacao);
   if (keys['w']) carro.position.z -= velocidade;
