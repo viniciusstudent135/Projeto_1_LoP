@@ -43,7 +43,7 @@ function criarRodas(posicao_x,posicao_z, raio_e_altura,pontas, cor){
   roda.position.set(posicao_x, -0.6,posicao_z); 
   return roda;
 }
-const posicao_x = 0.9, posicao_z = 0.9, raio_e_altura=0.4, Quant_pontas=8, corRoda = 0x535454;
+var posicao_x = 0.9, posicao_z = 0.9, raio_e_altura=0.4, Quant_pontas=8, corRoda = 0x535454;
 carro.add(criarRodas(posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda));
 carro.add(criarRodas(-posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda));
 carro.add(criarRodas(posicao_x,-posicao_z, raio_e_altura,Quant_pontas,corRoda));
