@@ -1,5 +1,4 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-//testar no github page
 //configurando cena
 const scene = new THREE.Scene();
 //camera
@@ -28,17 +27,17 @@ function CriarCorpo(){
 }
 carro.add(CriarCorpo());
 
-function CriaParabrisa(base, altura,x,y,z){
-  const parabrisa = new THREE.Mesh(
+function CriaSombra(base, altura,x,y,z){
+  const sombra = new THREE.Mesh(
     new THREE.PlaneGeometry(base,altura),
     new THREE.MeshBasicMaterial({color: 0x808080})
   );
-  parabrisa.position.set(x,y,z);
-  return parabrisa;
+  sombra.position.set(x,y,z);
+  return sombra;
 }
-const x1=0, y1=0.42,z1=0.69, y2=0.003,z2=1.5; //posições dos parabrisa
-carro.add(CriaParabrisa(2,1, x1,y1,z1));
-carro.add(CriaParabrisa(2,0.8, x1,y2,z2));
+const x1=0, y1=0.42,z1=0.69, y2=0.003,z2=1.5; //posições das sombras
+carro.add(CriaSombra(2,1, x1,y1,z1));
+carro.add(CriaSombra(2,0.8, x1,y2,z2));
 
 //relevo do carro
 function criarRelevo(){
