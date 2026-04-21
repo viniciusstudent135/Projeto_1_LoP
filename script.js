@@ -13,20 +13,26 @@ document.body.appendChild(renderer.domElement);
 //configurar a profundidade da camera:
 camera.position.z = 10;
 
-
 //---------------------|criação do carro|-----------------------\\
 const carro = new THREE.Group();
 const corCarro = 0xe30f00; // cinza quase brancod3d3d3
 //corpo do carro
-function CriarCorpo(){
+var xBase = 2, yBase = 0.85, zBase = 3;
+var xRelevo = 2, yRelevo = 0.8, zRelevo = 1.7;
+function CriarCorpo(largura,altura,comprimento,posicao_y, cor){
   const body = new THREE.Mesh(
-    new THREE.BoxGeometry(2, 0.85, 3),//largura,altura,comprimento
-    new THREE.MeshBasicMaterial({color: corCarro}) //cor e textura do material (material escolhido = básico, cor sólida)
+    new THREE.BoxGeometry(largura, altura, comprimento),//largura,altura,comprimento
+    new THREE.MeshBasicMaterial({color: cor}) //cor e textura do material (material escolhido = básico, cor sólida)
   );
+  body.position.y = posicao_y; //move o objeto na cena em 3d
   return body;
 }
-carro.add(CriarCorpo());
+const base = CriarCorpo(xBase, yBase, zBase, 0, corCarro);
+const relevo = CriarCorpo(xRelevo, yRelevo, zRelevo, 0.5, corCarro);
+carro.add(base);
+carro.add(relevo);
 
+//sombras do carro
 function CriaSombra(base, altura,x,y,z){
   const sombra = new THREE.Mesh(
     new THREE.PlaneGeometry(base,altura),
@@ -35,68 +41,55 @@ function CriaSombra(base, altura,x,y,z){
   sombra.position.set(x,y,z);
   return sombra;
 }
-const x1=0, y1=0.42,z1=0.69, y2=0.003,z2=1.55; //posições das sombras
-carro.add(CriaSombra(2,1, x1,y1,z1));
-carro.add(CriaSombra(2,0.82, x1,y2,z2));
-
-//relevo do carro
-function criarRelevo(){
-  const relevo = new THREE.Mesh(
-    new THREE.BoxGeometry(2, 0.8, 1.3),//largura,altura,comprimento 
-    new THREE.MeshBasicMaterial({color: corCarro})//cor antiga:030bfc
-  );
-  relevo.position.y = 0.5; //move o objeto na cena em 3d
-  return relevo;
-}
-carro.add(criarRelevo());
+var z_cima = 0.855,z_baixo=1.54; //posições das sombras
+const sombraRelevo = CriaSombra(xRelevo,yRelevo, 0,0.5,z_cima);
+const sombraBase = CriaSombra(xBase,yBase, 0,0,z_baixo);
+carro.add(sombraRelevo);
+carro.add(sombraBase);
 
 //rodas
-function criarRodas(x,z, a,b,cor){
+function criarRodas(posicao_x,posicao_z, raio_e_altura,pontas, cor){
   const roda = new THREE.Mesh(
-    new THREE.CylinderGeometry(a, a, a, b),//raio,altura,seg.radiais
+    new THREE.CylinderGeometry(raio_e_altura, raio_e_altura, raio_e_altura, pontas),//a = raio das bases do cilindro(2 primeiras letras),altura, b = seg.radiais(quantidade de pontas que forma)
     new THREE.MeshBasicMaterial({ color: cor })
   );
-  roda.rotation.z = Math.PI/2;// rotaciona o objeto
-  roda.position.set(x, -0.6,z); 
+  roda.rotation.z = Math.PI/2;// rotaciona o objeto em 90 graus no eixo z
+  roda.position.set(posicao_x, -0.6,posicao_z);
   return roda;
 }
-const x = 0.9, xAro = 0.97, a=0.4, aAro= 0.3, b=8, b2=6, corRoda = 0x000000, corAro= 0x808080;
-carro.add(criarRodas(x,x,a,b,corRoda));
-carro.add(criarRodas(-x,x,a,b,corRoda));
-carro.add(criarRodas(x,-x,a,b,corRoda));
-carro.add(criarRodas(-x,-x,a,b,corRoda));
+const xRoda = 0.9, xAro = 0.97, raioRoda=0.4, raioAro= 0.3, pontasRoda=8, pontasAro=6, corRoda = 0x000000, corAro= 0x808080;
+carro.add(criarRodas(xRoda,xRoda,raioRoda,pontasRoda,corRoda));
+carro.add(criarRodas(-xRoda,xRoda,raioRoda,pontasRoda,corRoda));
+carro.add(criarRodas(xRoda,-xRoda,raioRoda,pontasRoda,corRoda));
+carro.add(criarRodas(-xRoda,-xRoda,raioRoda,pontasRoda,corRoda));
 //efeito do aro da roda
-carro.add(criarRodas(xAro,x,aAro,b2,corAro));
-carro.add(criarRodas(-xAro,x,aAro,b2,corAro));
-carro.add(criarRodas(xAro,-x,aAro,b2,corAro));
-carro.add(criarRodas(-xAro,-x,aAro,b2,corAro));
-
-carro.position.z = 80;//ajusta posição inicial do carro
+carro.add(criarRodas(xAro,xRoda,raioAro,pontasAro,corAro));
+carro.add(criarRodas(-xAro,xRoda,raioAro,pontasAro,corAro));
+carro.add(criarRodas(xAro,-xRoda,raioAro,pontasAro,corAro));
+carro.add(criarRodas(-xAro,-xRoda,raioAro,pontasAro,corAro));
 //---------------------|carro pronto|-----------------------\\
 
 //---------------------|criação da pista|-----------------------\\
 const corPista = 0x394039;//cor da pista
 const corChao = 0x1a6b15;//cor do chão: verde escuro:
 const Pista = new THREE.Group();
-const Chao = new THREE.Group();
 
 function CriarGround(b,h,cor){
   const chao = new THREE.Mesh(
-    new THREE.PlaneGeometry(b, h),//largura,altura,comprimento
+    new THREE.PlaneGeometry(b, h),//largura e altura
     new THREE.MeshBasicMaterial({color: cor}) //cor e textura do material (material escolhido = básico, cor sólida)
   );
   chao.rotation.x = -Math.PI/2;// rotaciona o objeto
-  chao.position.y = -0.8;//move o objeto na cena em 3d
+  chao.position.y = -0.8;
   return chao;
 }
-
-Chao.add(CriarGround(700,700,corChao));
+const Chao = CriarGround(700,700,corChao);
 Chao.position.y = -0.81;
-Pista.add(CriarGround(20,190,corPista));
+Pista.add(CriarGround(20,700,corPista));
  
 function CriarListra(z){
   const listra = new THREE.Mesh(
-    new THREE.PlaneGeometry(2, 15),//largura,altura
+    new THREE.PlaneGeometry(2, 15),//largura e comprimento
     new THREE.MeshBasicMaterial({color: 0xd1c411}) //cor e textura do material (material escolhido = básico, cor sólida)
   );
   listra.rotation.x = -Math.PI/2;// rotaciona o objeto
@@ -104,12 +97,9 @@ function CriarListra(z){
   listra.position.z = z;//move o objeto na cena em 3d
   return listra;
 }
-Pista.add(CriarListra(-70));
-Pista.add(CriarListra(-40));
-Pista.add(CriarListra(-10));
-Pista.add(CriarListra(20));
-Pista.add(CriarListra(50));
-Pista.add(CriarListra(80));
+for(var i = -330; i <= 350; i+=30){
+  Pista.add(CriarListra(i));
+}
 //---------------------|pista pronta|-----------------------\\
 
 scene.add(Chao);
@@ -132,7 +122,7 @@ function updateCamera() {
   camera.position.y = carro.position.y + 5;
   camera.lookAt(carro.position); //camera acompanha o carro
 }
-const velocidade = 0.5;
+var velocidade = 0.45;
 function animacao(){
   requestAnimationFrame(animacao);
   if (keys['w']) carro.position.z -= velocidade;
