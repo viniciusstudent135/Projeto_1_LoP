@@ -70,40 +70,30 @@ carro.add(criarRodas(-xAro,-xRoda,raioAro,pontasAro,corAro));
 //---------------------|carro pronto|-----------------------\\
 
 //---------------------|criação da pista|-----------------------\\
-const corPista = 0x394039;//cor da pista
-const corChao = 0x1a6b15;//cor do chão: verde escuro:
-const Pista = new THREE.Group();
+const corPista = 0x394039;//cor da pista: cinza escuro
+const corChao = 0x1a6b15;//cor do chão: verde escuro
+const corListra = 0xd1c411;//cor da listra: amarela
 
-function CriarGround(b,h,cor){
+const Pista = new THREE.Group();
+function CriarGround(base,altura,cor, posicao_y, posicao_z){
   const chao = new THREE.Mesh(
-    new THREE.PlaneGeometry(b, h),//largura e altura
+    new THREE.PlaneGeometry(base, altura),//largura e altura
     new THREE.MeshBasicMaterial({color: cor}) //cor e textura do material (material escolhido = básico, cor sólida)
   );
   chao.rotation.x = -Math.PI/2;// rotaciona o objeto
-  chao.position.y = -0.8;
+  chao.position.y = posicao_y;
+  chao.position.z = posicao_z;//move o objeto na cena em 3d
   return chao;
 }
-const Chao = CriarGround(700,700,corChao);
-Chao.position.y = -0.81;
-Pista.add(CriarGround(20,700,corPista));
- 
-function CriarListra(z){
-  const listra = new THREE.Mesh(
-    new THREE.PlaneGeometry(2, 15),//largura e comprimento
-    new THREE.MeshBasicMaterial({color: 0xd1c411}) //cor e textura do material (material escolhido = básico, cor sólida)
-  );
-  listra.rotation.x = -Math.PI/2;// rotaciona o objeto
-  listra.position.y = -0.79;//move o objeto na cena em 3d
-  listra.position.z = z;//move o objeto na cena em 3d
-  return listra;
-}
+
+const Chao = CriarGround(700,700,corChao, -0.81, 0);//cria um chao de fundo
+Pista.add(CriarGround(20,700,corPista, -0.8, 0));//adiciona asfalto a pista
 for(var i = -330; i <= 350; i+=30){
-  Pista.add(CriarListra(i));
+  Pista.add(CriarGround(2,15,corListra, -0.79, i));//adiciona listras a pista
 }
 //---------------------|pista pronta|-----------------------\\
-
-scene.add(Chao);
-scene.add(Pista);
+scene.add(Chao);//adiciona o chão a cena
+scene.add(Pista);//adiciona a pista a cena
 scene.add(carro);//adiciona carro a cena
 
 //reconhece o teclado:
