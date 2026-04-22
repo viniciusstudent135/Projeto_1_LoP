@@ -90,10 +90,10 @@ function CriarGround(base,altura,cor, posicao_y, posicao_z){
   return chao;
 }
 
-const Chao = CriarGround(700,700,corChao, -0.81, 0);//cria um chao de fundo
-Pista.add(CriarGround(20,700,corPista, -0.8, 0));//adiciona asfalto a pista
+const Chao = CriarGround(700,700,corChao, -0.93, 0);//cria um chao de fundo
+Pista.add(CriarGround(20,700,corPista, -0.92, 0));//adiciona asfalto a pista
 for(var i = -330; i <= 350; i+=30){
-  Pista.add(CriarGround(2,15,corListra, -0.79, i));//adiciona listras a pista
+  Pista.add(CriarGround(2,15,corListra, -0.91, i));//adiciona listras a pista
 }
 //---------------------|pista pronta|-----------------------\\
 scene.background = new THREE.Color(0x87ceeb);//cor do fundo (céu azul claro)
@@ -112,9 +112,9 @@ window.addEventListener('keyup', (e) => {
 
 //carro se movendo ao apertar as teclas:
 function updateCamera() {
-  camera.position.x = carro.position.x + 1.5;
-  camera.position.z = carro.position.z + 7;
-  camera.position.y = carro.position.y + 5;
+  //camera.position.x = carro.position.x + 1.5;
+  //camera.position.z = carro.position.z + 7;
+  //camera.position.y = carro.position.y + 5;
   camera.lookAt(carro.position); //camera acompanha o carro
 }
 

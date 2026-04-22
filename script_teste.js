@@ -54,7 +54,7 @@ carro.add(rodaDireitaTras);
 carro.add(rodaEsquerdaFrente);
 //---------------------|carro pronto|-----------------------\\
 scene.add(carro);//adiciona carro a cena
-///*
+/*
 function animacao(){
   requestAnimationFrame(animacao);
   carro.rotation.y += 0.02; //rotação do carro
@@ -62,7 +62,7 @@ function animacao(){
 }
 animacao();
 //*/
-/*
+///*
 //reconhece o teclado:
 const keys = {};
 window.addEventListener('keydown', (e) => {
@@ -80,7 +80,7 @@ function updateCamera() {
   camera.lookAt(carro.position); //camera acompanha o carro
 }
 
-var velocidade = 5;
+var velocidade = 0.35;
 function animacao(){
   requestAnimationFrame(animacao);
   if (keys['arrowup'] || keys['w']) carro.position.z -= velocidade;
