@@ -96,6 +96,7 @@ for(var i = -330; i <= 350; i+=30){
   Pista.add(CriarGround(2,15,corListra, -0.79, i));//adiciona listras a pista
 }
 //---------------------|pista pronta|-----------------------\\
+scene.background = new THREE.Color(0x87ceeb);//cor do fundo (céu azul claro)
 scene.add(Chao);//adiciona o chão a cena
 scene.add(Pista);//adiciona a pista a cena
 scene.add(carro);//adiciona carro a cena
@@ -103,26 +104,27 @@ scene.add(carro);//adiciona carro a cena
 //reconhece o teclado:
 const keys = {};
 window.addEventListener('keydown', (e) => {
-  keys[e.key] = true;
+  keys[e.key.toLowerCase()] = true;
 });
 window.addEventListener('keyup', (e) => {
-  keys[e.key] = false;
+  keys[e.key.toLowerCase()] = false;
 });
 
 //carro se movendo ao apertar as teclas:
 function updateCamera() {
-  camera.position.x = carro.position.x + 2;
+  camera.position.x = carro.position.x + 1.5;
   camera.position.z = carro.position.z + 7;
   camera.position.y = carro.position.y + 5;
   camera.lookAt(carro.position); //camera acompanha o carro
 }
+
 var velocidade = 0.45;
 function animacao(){
   requestAnimationFrame(animacao);
-  if (keys['w']) carro.position.z -= velocidade;
-  if (keys['s']) carro.position.z += velocidade;
-  if (keys['a']) carro.position.x -= velocidade;
-  if (keys['d']) carro.position.x += velocidade;
+  if (keys['arrowup'] || keys['w']) carro.position.z -= velocidade;
+  if (keys['arrowdown'] || keys['s']) carro.position.z += velocidade;
+  if (keys['arrowleft'] || keys['a']) carro.position.x -= velocidade;
+  if (keys['arrowright'] || keys['d']) carro.position.x += velocidade;
   renderer.render(scene, camera);
   updateCamera();
 }
