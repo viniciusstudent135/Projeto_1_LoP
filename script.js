@@ -112,16 +112,16 @@ window.addEventListener('keyup', (e) => {
 
 //carro se movendo ao apertar as teclas:
 function updateCamera() {
-  //camera.position.x = carro.position.x + 1.5;
-  //camera.position.z = carro.position.z + 7;
-  //camera.position.y = carro.position.y + 5;
+  camera.position.x = carro.position.x + 1.5;
+  camera.position.z = carro.position.z + 7;
+  camera.position.y = carro.position.y + 5;
   camera.lookAt(carro.position); //camera acompanha o carro
 }
 
 var velocidade = 0.45;
 function animacao(){
   requestAnimationFrame(animacao);
-  if (keys['arrowup'] || keys['w']) carro.position.z -= velocidade;
+  if (keys['arrowup'] || keys['w']) carro.position.z -= velocidade; 
   if (keys['arrowdown'] || keys['s']) carro.position.z += velocidade;
   if (keys['arrowleft'] || keys['a']) carro.position.x -= velocidade;
   if (keys['arrowright'] || keys['d']) carro.position.x += velocidade;
