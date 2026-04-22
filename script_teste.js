@@ -43,13 +43,17 @@ function criarRodas(posicao_x,posicao_z, raio_e_altura,pontas, cor){
   roda.position.set(posicao_x, -0.6,posicao_z); 
   return roda;
 }
-var posicao_x = 0.9, posicao_z = 0.9, raio_e_altura=0.4, Quant_pontas=8, corRoda = 0x535454;
-//carro.add(criarRodas(posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda));
-//carro.add(criarRodas(-posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda));
-//carro.add(criarRodas(posicao_x,-posicao_z, raio_e_altura,Quant_pontas,corRoda));
-//carro.add(criarRodas(-posicao_x,-posicao_z, raio_e_altura,Quant_pontas,corRoda));
+var posicao_x = 0.9, posicao_z = 0.9, raio_e_altura=0.4, Quant_pontas=8, corRoda = 0x292a2b;//cor cinza escuro
+const rodaDireitaTras = criarRodas(posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda);
+const rodaEsquerdaTras = criarRodas(-posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda);
+const rodaDireitaFrente = criarRodas(posicao_x,-posicao_z, raio_e_altura,Quant_pontas,corRoda);
+const rodaEsquerdaFrente = criarRodas(-posicao_x,-posicao_z, raio_e_altura,Quant_pontas,corRoda);
+carro.add(rodaDireitaFrente);
+carro.add(rodaEsquerdaTras);
+carro.add(rodaDireitaTras);
+carro.add(rodaEsquerdaFrente);
 //---------------------|carro pronto|-----------------------\\
-
+//scene.background = new THREE.Color(0x87ceeb);//cor do fundo (céu azul claro)
 scene.add(carro);//adiciona carro a cena
 
 function animacao(){

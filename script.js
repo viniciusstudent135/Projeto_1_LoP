@@ -58,10 +58,14 @@ function criarRodas(posicao_x,posicao_z, raio_e_altura,pontas, cor){
   return roda;
 }
 const xRoda = 0.9, xAro = 0.97, raioRoda=0.4, raioAro= 0.3, pontasRoda=8, pontasAro=6, corRoda = 0x000000, corAro= 0x808080;
-carro.add(criarRodas(xRoda,xRoda,raioRoda,pontasRoda,corRoda));
-carro.add(criarRodas(-xRoda,xRoda,raioRoda,pontasRoda,corRoda));
-carro.add(criarRodas(xRoda,-xRoda,raioRoda,pontasRoda,corRoda));
-carro.add(criarRodas(-xRoda,-xRoda,raioRoda,pontasRoda,corRoda));
+const rodaDireitaTras = criarRodas(xRoda,xRoda, raioRoda,pontasRoda,corRoda);
+const rodaEsquerdaTras = criarRodas(-xRoda,xRoda, raioRoda,pontasRoda,corRoda);
+const rodaDireitaFrente = criarRodas(xRoda,-xRoda, raioRoda,pontasRoda,corRoda);
+const rodaEsquerdaFrente = criarRodas(-xRoda,-xRoda, raioRoda,pontasRoda,corRoda);
+carro.add(rodaDireitaFrente);
+carro.add(rodaEsquerdaTras);
+carro.add(rodaDireitaTras);
+carro.add(rodaEsquerdaFrente);
 //efeito do aro da roda
 carro.add(criarRodas(xAro,xRoda,raioAro,pontasAro,corAro));
 carro.add(criarRodas(-xAro,xRoda,raioAro,pontasAro,corAro));
