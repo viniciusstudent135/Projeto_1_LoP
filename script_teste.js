@@ -16,7 +16,7 @@ camera.position.z = 10;
 
 ////---------------------|criação do carro|-----------------------\\
 const carro = new THREE.Group();
-const corCarro = 0xe30f00; // cinza quase brancod3d3d3
+const corCarro = 0xe30f00; // vermelho
 //corpo do carro
 var xBase = 2, yBase = 0.85, zBase = 3;
 var xRelevo = 2, yRelevo = 0.8, zRelevo = 1.7;
@@ -44,17 +44,18 @@ function criarRodas(posicao_x,posicao_z, raio_e_altura,pontas, cor){
   return roda;
 }
 var posicao_x = 0.9, posicao_z = 0.9, raio_e_altura=0.4, Quant_pontas=8, corRoda = 0x535454;
-carro.add(criarRodas(posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda));
-carro.add(criarRodas(-posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda));
-carro.add(criarRodas(posicao_x,-posicao_z, raio_e_altura,Quant_pontas,corRoda));
-carro.add(criarRodas(-posicao_x,-posicao_z, raio_e_altura,Quant_pontas,corRoda));
+//carro.add(criarRodas(posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda));
+//carro.add(criarRodas(-posicao_x,posicao_z, raio_e_altura,Quant_pontas,corRoda));
+//carro.add(criarRodas(posicao_x,-posicao_z, raio_e_altura,Quant_pontas,corRoda));
+//carro.add(criarRodas(-posicao_x,-posicao_z, raio_e_altura,Quant_pontas,corRoda));
 //---------------------|carro pronto|-----------------------\\
 
 scene.add(carro);//adiciona carro a cena
 
 function animacao(){
   requestAnimationFrame(animacao);
-  carro.rotation.y += 0.02; //rotação do carro
+  //carro.rotation.y += 0.02; //rotação do carro
+  carro.rotation.y = Math.PI/2; //movimento do carro
   renderer.render(scene, camera);
   updateCamera();
 }
